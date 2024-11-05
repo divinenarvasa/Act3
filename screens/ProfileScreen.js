@@ -7,7 +7,7 @@ export default function ProfileScreen({ navigation }) {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userBio, setUserBio] = useState('This is your bio.');
-  const [userProfilePic, setUserProfilePic] = useState('https://example.com/profile-pic.png'); 
+  const [userProfilePic, setUserProfilePic] = useState('https://example.com/profile-pic.png');
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const colorScheme = useColorScheme();
@@ -23,10 +23,8 @@ export default function ProfileScreen({ navigation }) {
       const bio = await AsyncStorage.getItem('bio');
       const profilePic = await AsyncStorage.getItem('profilePic');
 
-      if (name && email) {
-        setUserName(name);
-        setUserEmail(email);
-      }
+      if (name) setUserName(name);
+      if (email) setUserEmail(email);
       if (bio) setUserBio(bio);
       if (profilePic) setUserProfilePic(profilePic);
     };
@@ -35,23 +33,20 @@ export default function ProfileScreen({ navigation }) {
   }, []);
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('name');
-    await AsyncStorage.removeItem('email');
-    await AsyncStorage.removeItem('bio');
-    await AsyncStorage.removeItem('profilePic');
+    await AsyncStorage.clear(); // Clear all user data
     navigation.navigate('Login');
   };
 
   const handleNotificationSettings = () => {
-    Alert.alert("Notifications", "Manage your notification preferences here."); 
+    Alert.alert("Notifications", "Manage your notification preferences here.");
   };
 
   const handleChangeLanguage = () => {
-    Alert.alert("Change Language", "Language options will be here."); 
+    Alert.alert("Change Language", "Language options will be here.");
   };
 
   const handleSupport = () => {
-    Alert.alert("Support", "Support options will be here."); 
+    Alert.alert("Support", "Support options will be here.");
   };
 
   const toggleDarkMode = () => {
@@ -70,18 +65,15 @@ export default function ProfileScreen({ navigation }) {
         <Text style={[styles.bioText, { color: isDarkMode ? 'white' : 'black' }]}>Bio: {userBio}</Text>
       </View>
 
-    
       <View style={styles.toggleContainer}>
-        <Text style={{ color: isDarkMode ? 'white' : 'black' }}>Dark Mode  </Text>
+        <Text style={{ color: isDarkMode ? 'white' : 'black' }}>Dark Mode</Text>
         <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
       </View>
 
-      
       <TouchableOpacity onPress={handleNotificationSettings} style={styles.optionButton}>
         <Text style={[styles.optionText, { color: isDarkMode ? 'white' : 'black' }]}>Notification Settings</Text>
       </TouchableOpacity>
 
-  
       <View style={styles.accountOptionsBox}>
         <Text style={[styles.sectionTitle, { color: isDarkMode ? 'white' : 'black' }]}>Manage Account</Text>
         <TouchableOpacity onPress={() => alert('Change Email')}>
@@ -103,7 +95,6 @@ export default function ProfileScreen({ navigation }) {
         <Text style={[styles.accountText, { color: isDarkMode ? 'white' : 'black' }]}>Support</Text>
       </TouchableOpacity>
 
-    
       <View style={styles.logoutButtonContainer}>
         <Button title="Logout" onPress={handleLogout} />
       </View>
@@ -117,16 +108,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    position: 'relative',
   },
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     alignSelf: 'flex-start',
-    position: 'absolute',
-    top: 50,
-    left: 20,
   },
   profilePic: {
     width: 100,

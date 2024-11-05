@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TextInput, Button } from 'react-native-paper';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-LogBox.ignoreLogs(['Warning: ...']); 
-console.log("Component Loading..."); 
+LogBox.ignoreLogs(['Warning: ...']);
+console.log("Login Component Loading...");
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -14,13 +14,13 @@ export default function LoginScreen({ navigation }) {
   useEffect(() => {
     const checkLoginStatus = async () => {
       const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
-      console.log("isLoggedIn:", isLoggedIn); 
-      if (isLoggedIn) {
+      console.log("isLoggedIn:", isLoggedIn);
+      if (isLoggedIn === 'true') {
         navigation.navigate('Profile');
       }
     };
     checkLoginStatus();
-  }, []);
+  }, [navigation]);
 
   const handleLogin = async () => {
     const storedEmail = await AsyncStorage.getItem('email');
@@ -99,16 +99,16 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 30,
-    height: 25,
+    height: 30,
     paddingVertical: 12,
   },
   loginButton: {
     backgroundColor: '#088F8F',
-    borderRadius: 0, 
+    borderRadius: 0,
   },
   registerButton: {
     backgroundColor: '#088F8F',
-    borderRadius: 0, 
+    borderRadius: 0,
   },
   headerText: {
     color: 'white',
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   forgotPasswordContainer: {
-    alignItems: 'flex-end', 
+    alignItems: 'flex-end',
     marginBottom: 20,
   },
   forgotPasswordText: {

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 30,
-    height: 50,  
+    height: 30,  
     paddingVertical: 12,
   },
   registerButton: {
